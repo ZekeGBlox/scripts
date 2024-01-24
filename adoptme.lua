@@ -9,7 +9,7 @@
         InstantTradeBadge = false
     }
     
-    lib=loadstring(game:HttpGet"https://raw.githubusercontent.com/2dgeneralspam1/garfield-hub/main/dependences/final-ui-lib")()
+    lib=loadstring(game:HttpGet("https://raw.githubusercontent.com/ZekeGBlox/scripts/main/Loader")()
     local win = lib:CreateWindow("Bacon hub | Adopt Me!", Vector2.new(492, 598), Enum.KeyCode.RightShift)
     
     
