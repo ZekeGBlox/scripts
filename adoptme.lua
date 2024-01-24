@@ -1,6 +1,4 @@
- for Name, Remote in pairs(debug.getupvalue(require(game:service'ReplicatedStorage'.Fsys).load("RouterClient").init, 4)) do
-        Remote.Name = Name
-    end
+
     
     local Toggles = {
         BabyAutoFarm = false,
