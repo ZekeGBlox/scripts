@@ -6,8 +6,7 @@
         HealOthers = false,
         InstantTradeBadge = false
     }
-    
-    lib=loadstring(game:HttpGet("https://raw.githubusercontent.com/ZekeGBlox/scripts/main/Loader")()
+    lib=loadstring(game:HttpGet"https://raw.githubusercontent.com/ZekeGBlox/scripts/main/Loader")()
     local win = lib:CreateWindow("Bacon hub | Adopt Me!", Vector2.new(492, 598), Enum.KeyCode.RightShift)
     
     
