@@ -1,0 +1,385 @@
+-- // The variables \\ --
+
+local Players = game:GetService("Players")
+local CoreGui = game:GetService("CoreGui")
+local RunService = game:GetService("RunService")
+
+-- // Panda \\ -- 
+
+local LibVersion = "v2" -- (v3 & v4 are also available)
+local LibType = "roblox" -- Always use lowercase ("fivem" or "roblox")
+local ServiceID = "zekehub" -- Replace this with your actual Service ID
+local uiClosed = false
+_G.keyValidated = false
+_G.uiClosed = false
+
+-- Load the PandaAuth library
+local PandaAuth = loadstring(game:HttpGet('https://pandadevelopment.cloud/servicelib?service='..ServiceID..'&core='..LibType..'&param='..LibVersion))()
+
+local function GenerateLink(service)
+    return PandaAuth:GetLink(service)
+end
+
+local function validate_key(service, key)
+    return PandaAuth:ValidateKey(service, key)
+end
+
+-- // The uis elements \\ -- 
+
+local zekezeke = Instance.new("ScreenGui",CoreGui)
+zekezeke.Name = "zekezeke"
+zekezeke.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local zekeHub = Instance.new("Frame")
+zekeHub.Name = "Zeke hub"
+zekeHub.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+zekeHub.BorderColor3 = Color3.fromRGB(0, 0, 0)
+zekeHub.BorderSizePixel = 0
+zekeHub.Position = UDim2.fromScale(0.376, 0.0914)
+zekeHub.Size = UDim2.fromOffset(293, 309)
+
+local uIGradient = Instance.new("UIGradient")
+uIGradient.Name = "UIGradient"
+uIGradient.Color = ColorSequence.new({
+  ColorSequenceKeypoint.new(0, Color3.fromRGB(14, 12, 13)),
+  ColorSequenceKeypoint.new(0.902, Color3.fromRGB(18, 17, 19)),
+  ColorSequenceKeypoint.new(1, Color3.fromRGB(14, 12, 13)),
+})
+uIGradient.Parent = zekeHub
+
+local uICorner = Instance.new("UICorner")
+uICorner.Name = "UICorner"
+uICorner.Parent = zekeHub
+
+local keyTextbox = Instance.new("Frame")
+keyTextbox.Name = "KeyTextbox"
+keyTextbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+keyTextbox.BackgroundTransparency = 1
+keyTextbox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+keyTextbox.BorderSizePixel = 0
+keyTextbox.Position = UDim2.fromScale(0.0755, 0.559)
+keyTextbox.Size = UDim2.fromOffset(247, 29)
+
+local uICorner1 = Instance.new("UICorner")
+uICorner1.Name = "UICorner"
+uICorner1.CornerRadius = UDim.new(0, 6)
+uICorner1.Parent = keyTextbox
+
+local uIStroke = Instance.new("UIStroke")
+uIStroke.Name = "UIStroke"
+uIStroke.Color = Color3.fromRGB(135, 100, 163)
+uIStroke.Parent = keyTextbox
+
+local textBox = Instance.new("TextBox")
+textBox.Name = "TextBox"
+textBox.CursorPosition = -1
+textBox.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+textBox.PlaceholderText = "u put da key here...."
+textBox.Text = ""
+textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+textBox.TextSize = 14
+textBox.TextXAlignment = Enum.TextXAlignment.Left
+textBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+textBox.BackgroundTransparency = 1
+textBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+textBox.BorderSizePixel = 0
+textBox.ClipsDescendants = true
+textBox.Position = UDim2.fromScale(0.138, 0)
+textBox.Size = UDim2.fromOffset(213, 29)
+
+local uIPadding = Instance.new("UIPadding")
+uIPadding.Name = "UIPadding"
+uIPadding.PaddingLeft = UDim.new(0, 6)
+uIPadding.Parent = textBox
+
+textBox.Parent = keyTextbox
+
+local imageLabel = Instance.new("ImageLabel")
+imageLabel.Name = "ImageLabel"
+imageLabel.Image = "rbxassetid://16713057553"
+imageLabel.ImageColor3 = Color3.fromRGB(135, 100, 163)
+imageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+imageLabel.BackgroundTransparency = 1
+imageLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+imageLabel.BorderSizePixel = 0
+imageLabel.Position = UDim2.fromScale(0.0526, 0.241)
+imageLabel.Size = UDim2.fromOffset(15, 15)
+imageLabel.Parent = keyTextbox
+
+keyTextbox.Parent = zekeHub
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Name = "TextLabel"
+textLabel.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+textLabel.RichText = true
+textLabel.Text = "<font color=\"rgb(135, 100, 163)\">Zeke</font><font color=\"rgb(255,255,255)\">hub</font>"
+textLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+textLabel.TextSize = 28
+textLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.BackgroundTransparency = 1
+textLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+textLabel.BorderSizePixel = 0
+textLabel.Position = UDim2.fromScale(0.154, 0.411)
+textLabel.Size = UDim2.fromOffset(200, 29)
+textLabel.Parent = zekeHub
+
+local logo = Instance.new("Frame")
+logo.Name = "Logo"
+logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+logo.BackgroundTransparency = 1
+logo.BorderColor3 = Color3.fromRGB(0, 0, 0)
+logo.BorderSizePixel = 0
+logo.Position = UDim2.fromScale(0.307, 0.0262)
+logo.Size = UDim2.fromOffset(110, 110)
+
+local uICorner2 = Instance.new("UICorner")
+uICorner2.Name = "UICorner"
+uICorner2.CornerRadius = UDim.new(0, 50)
+uICorner2.Parent = logo
+
+local zEKEHUBLOGO = Instance.new("ImageLabel")
+zEKEHUBLOGO.Name = "ZEKEHUBLOGO"
+zEKEHUBLOGO.Image = "rbxassetid://16713184131"
+zEKEHUBLOGO.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+zEKEHUBLOGO.BorderColor3 = Color3.fromRGB(0, 0, 0)
+zEKEHUBLOGO.BorderSizePixel = 0
+zEKEHUBLOGO.Position = UDim2.fromScale(0.053, 0.0485)
+zEKEHUBLOGO.Size = UDim2.fromOffset(100, 100)
+
+local uICorner3 = Instance.new("UICorner")
+uICorner3.Name = "UICorner"
+uICorner3.CornerRadius = UDim.new(0, 50)
+uICorner3.Parent = zEKEHUBLOGO
+
+zEKEHUBLOGO.Parent = logo
+
+local borderaround = Instance.new("UIStroke")
+borderaround.Name = "borderaround"
+borderaround.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+borderaround.Color = Color3.fromRGB(135, 100, 163)
+borderaround.Thickness = 2
+borderaround.Parent = logo
+
+logo.Parent = zekeHub
+
+local login = Instance.new("TextButton")
+login.Name = "Login"
+login.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+login.Text = "Login"
+login.TextColor3 = Color3.fromRGB(255, 255, 255)
+login.TextSize = 14
+login.BackgroundColor3 = Color3.fromRGB(135, 100, 163)
+login.BackgroundTransparency = 0.6
+login.BorderColor3 = Color3.fromRGB(0, 0, 0)
+login.BorderSizePixel = 0
+login.Position = UDim2.fromScale(0.242, 0.716)
+login.Size = UDim2.fromOffset(150, 25)
+
+local uICorner4 = Instance.new("UICorner")
+uICorner4.Name = "UICorner"
+uICorner4.Parent = login
+
+login.Parent = zekeHub
+
+local getKey = Instance.new("TextButton")
+getKey.Name = "GetKey"
+getKey.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+getKey.Text = "Get key"
+getKey.TextColor3 = Color3.fromRGB(255, 255, 255)
+getKey.TextSize = 14
+getKey.BackgroundColor3 = Color3.fromRGB(135, 100, 163)
+getKey.BackgroundTransparency = 0.7
+getKey.BorderColor3 = Color3.fromRGB(0, 0, 0)
+getKey.BorderSizePixel = 0
+getKey.Position = UDim2.fromScale(0.621, 0.857)
+getKey.Size = UDim2.fromOffset(94, 25)
+
+local uICorner5 = Instance.new("UICorner")
+uICorner5.Name = "UICorner"
+uICorner5.Parent = getKey
+
+getKey.Parent = zekeHub
+
+local discord = Instance.new("TextButton")
+discord.Name = "Discord"
+discord.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+discord.Text = "Get discord"
+discord.TextColor3 = Color3.fromRGB(255, 255, 255)
+discord.TextSize = 14
+discord.TextXAlignment = Enum.TextXAlignment.Right
+discord.BackgroundColor3 = Color3.fromRGB(135, 100, 163)
+discord.BackgroundTransparency = 0.7
+discord.BorderColor3 = Color3.fromRGB(0, 0, 0)
+discord.BorderSizePixel = 0
+discord.Position = UDim2.fromScale(0.0747, 0.857)
+discord.Size = UDim2.fromOffset(112, 25)
+
+local uICorner6 = Instance.new("UICorner")
+uICorner6.Name = "UICorner"
+uICorner6.Parent = discord
+
+local imageLabel1 = Instance.new("ImageLabel")
+imageLabel1.Name = "ImageLabel"
+imageLabel1.Image = "rbxassetid://16713236630"
+imageLabel1.ImageColor3 = Color3.fromRGB(135, 100, 163)
+imageLabel1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+imageLabel1.BackgroundTransparency = 1
+imageLabel1.BorderColor3 = Color3.fromRGB(0, 0, 0)
+imageLabel1.BorderSizePixel = 0
+imageLabel1.Position = UDim2.fromScale(0.107, 0.219)
+imageLabel1.Size = UDim2.fromOffset(17, 17)
+imageLabel1.Parent = discord
+
+local uIPadding1 = Instance.new("UIPadding")
+uIPadding1.Name = "UIPadding"
+uIPadding1.PaddingRight = UDim.new(0, 16)
+uIPadding1.Parent = discord
+
+discord.Parent = zekeHub
+
+local exit = Instance.new("ImageButton")
+exit.Name = "Exit"
+exit.Image = "rbxassetid://9886659671"
+exit.ImageColor3 = Color3.fromRGB(135, 100, 163)
+exit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+exit.BackgroundTransparency = 1
+exit.BorderColor3 = Color3.fromRGB(0, 0, 0)
+exit.BorderSizePixel = 0
+exit.Position = UDim2.fromScale(0.884, 0.0198)
+exit.Size = UDim2.fromScale(0.08, 0.07)
+exit.Parent = zekeHub
+
+zekeHub.Parent = zekezeke
+
+exit.MouseButton1Click:Connect(function()
+    zekeHub:Destroy()
+end
+)
+
+discord.MouseButton1Click:Connect(function()
+    local request = (syn and syn.request) or (http and http.request) or http_request
+
+if request then
+    local response = request({
+        Url = "http://127.0.0.1:6463/rpc?v=1",
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json",
+            ["Origin"] = "https://discord.com"
+        },
+        Body = game:GetService("HttpService"):JSONEncode({
+            cmd = "INVITE_BROWSER",
+            args = {code = "zTy5gc3sD4"}, -- Replace NEW_INVITE_CODE with a valid code
+            nonce = game:GetService("HttpService"):GenerateGUID(false)
+        })
+    })
+end 
+end)
+
+-- Get Key button functionality
+getKey.MouseButton1Click:Connect(function()
+setclipboard(PandaAuth:GetKey(ServiceID))
+end)
+
+local login = zekeHub:FindFirstChild("Login")
+local keyTextBox = zekeHub:FindFirstChild("KeyTextbox"):FindFirstChild("TextBox")
+
+-- Function to check if a file exists and read it
+local function readKeyFile()
+    if pcall(function() readfile("zeke_key.txt") end) then
+        return readfile("zeke_key.txt")
+    else
+        return nil
+    end
+end
+
+-- Function to save the key to a file
+local function saveKeyToFile(key)
+    writefile("zeke_key.txt", key)
+end
+
+-- Function to clear the key file
+local function clearKeyFile()
+    writefile("zeke_key.txt", "")
+end
+
+-- Function to handle authentication
+local function authenticate(keyInput)
+    if validate_key(ServiceID, keyInput) then
+        print('authenticated')
+        _G.keyValidated = true  -- Set the global flag to true upon successful authentication
+        saveKeyToFile(keyInput)  -- Save the key to the file
+        zekeHub:Destroy() -- Destroy the UI after successful authentication
+    else
+        print('not authenticated')
+        keyTextBox.Text = "Invalid Key - Try Again" -- Display error message in the TextBox
+        clearKeyFile()  -- Clear the key file since authentication failed
+    end
+end
+
+-- Load the key from the file if it exists and authenticate
+local savedKey = readKeyFile()
+if savedKey and #savedKey > 0 then
+    keyTextBox.Text = savedKey
+    authenticate(savedKey)
+end
+
+-- Authenticate when the login button is clicked
+login.MouseButton1Click:Connect(function()
+    local keyInput = keyTextBox.Text -- Get the input from the TextBox
+    authenticate(keyInput)
+end)
+
+local UserInputService = game:GetService("UserInputService")
+local runService = (game:GetService("RunService"));
+
+local gui = zekeHub
+
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+function Lerp(a, b, m)
+	return a + (b - a) * m
+end;
+
+local lastMousePos
+local lastGoalPos
+local DRAG_SPEED = (8); -- // The speed of the UI darg.
+function Update(dt)
+	if not (startPos) then return end;
+	if not (dragging) and (lastGoalPos) then
+		gui.Position = UDim2.new(startPos.X.Scale, Lerp(gui.Position.X.Offset, lastGoalPos.X.Offset, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(gui.Position.Y.Offset, lastGoalPos.Y.Offset, dt * DRAG_SPEED))
+		return 
+	end;
+
+	local delta = (lastMousePos - UserInputService:GetMouseLocation())
+	local xGoal = (startPos.X.Offset - delta.X);
+	local yGoal = (startPos.Y.Offset - delta.Y);
+	lastGoalPos = UDim2.new(startPos.X.Scale, xGoal, startPos.Y.Scale, yGoal)
+	gui.Position = UDim2.new(startPos.X.Scale, Lerp(gui.Position.X.Offset, xGoal, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(gui.Position.Y.Offset, yGoal, dt * DRAG_SPEED))
+end;
+
+gui.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = gui.Position
+		lastMousePos = UserInputService:GetMouseLocation()
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+gui.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
+end)
+
+runService.Heartbeat:Connect(Update)
