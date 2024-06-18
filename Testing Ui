@@ -647,12 +647,12 @@ else
         return nil
     end)
     
-    if success and errorOrParent then
+    if success and errorOrParent and errorOrParent:IsA("ScreenGui") then
         L_12_.Parent = errorOrParent
     else
         L_12_.DisplayOrder = 9e8
         L_12_.ResetOnSpawn = false
-        L_12_.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui", math.huge)
+        L_12_.Parent = parentGui -- Fallback to parentGui if no suitable parent is found
     end
 end
 
