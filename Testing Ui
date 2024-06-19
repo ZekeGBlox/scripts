@@ -631,6 +631,7 @@ local playerGui = player:WaitForChild("PlayerGui")
 
 local L_12_ = Instance.new("ScreenGui")
 L_12_.Name = string.lower(string.reverse(string.sub(L_7_:GenerateGUID(false), 1, 8)))
+
 if getfenv().syn then
     getfenv().syn.protect_gui(L_12_)
     L_12_.Parent = playerGui
@@ -645,9 +646,7 @@ else
     if success and errorOrParent and errorOrParent:IsA("GuiBase") then
         L_12_.Parent = errorOrParent
     else
-        L_12_.DisplayOrder = 9e8
-        L_12_.ResetOnSpawn = false
-        L_12_.Parent = playerGui -- Fallback to playerGui if no suitable parent is found
+        L_12_.Parent = playerGui --
     end
 end
 
