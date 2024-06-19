@@ -21,7 +21,9 @@ local L_4_ = game:GetService("RunService")
 local L_5_ = game:GetService("Players").LocalPlayer
 local L_6_ = L_5_:GetMouse()
 local L_7_ = game:GetService("HttpService")
-local L_8_ = game:GetService("CoreGui")
+local player = game:GetService("Players").LocalPlayer
+local L_8_ = player:WaitForChild("PlayerGui")
+
 local L_9_ = game:GetService("Debris")
 
 
