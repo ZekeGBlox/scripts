@@ -56,7 +56,32 @@ local VERTICES = {
 
 -- functions
 local function isBodyPart(name)
-	return name == "Head" or name:find("Torso") or name:find("Leg") or name:find("Arm");
+    local bodyPartNames = {
+        "Head", 
+        "Torso", 
+        "Leg", 
+        "Arm", 
+        "UpperTorso", 
+        "LowerTorso", 
+        "LeftArm", 
+        "RightArm", 
+        "LeftLeg", 
+        "RightLeg",
+        "Left Arm", 
+        "Right Arm", 
+        "Left Leg", 
+        "Right Leg",
+        "Root", 
+        "Spine"
+    }
+    
+    for _, partName in ipairs(bodyPartNames) do
+        if name == partName or name:find(partName) then
+            return true
+        end
+    end
+    
+    return false
 end
 
 local function getBoundingBox(parts)
@@ -199,7 +224,7 @@ function EspObject:Update()
 	self.options = interface.teamSettings[interface.isFriendly(self.player) and "friendly" or "enemy"];
 	self.character = interface.getCharacter(self.player);
 	self.health, self.maxHealth = interface.getHealth(self.player);
-	self.weapon = interface.getWeapon(self.player);
+	--self.weapon = interface.getWeapon(self.player);
 	self.enabled = self.options.enabled and self.character and not
 		(#interface.whitelist > 0 and not find(interface.whitelist, self.player.UserId));
 
@@ -226,7 +251,7 @@ function EspObject:Update()
 
 			for i = 1, #children do
 				local part = children[i];
-				if isA(part, "MeshPart") and isBodyPart(part.Name) then
+				if isA(part, "BasePart") and isBodyPart(part.Name) then
 					cache[#cache + 1] = part;
 				end
 			end
@@ -546,8 +571,8 @@ local EspInterface = {
 	},
 	teamSettings = {
 		enemy = {
-			enabled = false,
-			box = false,
+			enabled = true,
+			box = true,
 			boxColor = { Color3.new(1,0,0), 1 },
 			boxOutline = true,
 			boxOutlineColor = { Color3.new(), 1 },
@@ -593,8 +618,8 @@ local EspInterface = {
 			chamsOutlineColor = { Color3.new(1,0,0), 0 },
 		},
 		friendly = {
-			enabled = false,
-			box = false,
+			enabled = true,
+			box = true,
 			boxColor = { Color3.new(0,1,0), 1 },
 			boxOutline = true,
 			boxOutlineColor = { Color3.new(), 1 },
@@ -617,7 +642,7 @@ local EspInterface = {
 			nameOutlineColor = Color3.new(),
 			weapon = false,
 			weaponColor = { Color3.new(1,1,1), 1 },
-			weaponOutline = true,
+			weaponOutline = false,
 			weaponOutlineColor = Color3.new(),
 			distance = false,
 			distanceColor = { Color3.new(1,1,1), 1 },
@@ -696,7 +721,7 @@ function EspInterface.Unload()
 	EspInterface.playerRemoving:Disconnect();
 	EspInterface._hasLoaded = false;
 end
-
+--[[
 -- game specific functions
 function EspInterface.getWeapon(player)
     for _, model in pairs(workspace.ViewModels:GetChildren()) do
@@ -706,7 +731,7 @@ function EspInterface.getWeapon(player)
         end
     end
     return "Unknown"
-end
+end]]
 
 
 function EspInterface.isFriendly(player)
@@ -729,5 +754,4 @@ function EspInterface.getHealth(player)
 	end
 	return 100, 100;
 end
-
 return EspInterface;
