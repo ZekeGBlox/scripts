@@ -226,7 +226,7 @@ function EspObject:Update()
 
 			for i = 1, #children do
 				local part = children[i];
-				if isA(part, "BasePart") and isBodyPart(part.Name) then
+				if isA(part, "MeshPart") and isBodyPart(part.Name) then
 					cache[#cache + 1] = part;
 				end
 			end
