@@ -678,33 +678,35 @@ function EspInterface.AddInstance(instance, options)
 end
 
 function EspInterface.Load()
-	assert(not EspInterface._hasLoaded, "Esp has already been loaded.");
+    assert(not EspInterface._hasLoaded, "Esp has already been loaded.");
 
-	local function createObject(player)
-		EspInterface._objectCache[player] = {
-			EspObject.new(player, EspInterface),
-			ChamObject.new(player, EspInterface)
-		};
-	end
+    local function createObject(player)
+        if player == localPlayer then return end
+        
+        EspInterface._objectCache[player] = {
+            EspObject.new(player, EspInterface),
+            ChamObject.new(player, EspInterface)
+        };
+    end
 
-	local function removeObject(player)
-		local object = EspInterface._objectCache[player];
-		if object then
-			for i = 1, #object do
-				object[i]:Destruct();
-			end
-			EspInterface._objectCache[player] = nil;
-		end
-	end
+    local function removeObject(player)
+        local object = EspInterface._objectCache[player];
+        if object then
+            for i = 1, #object do
+                object[i]:Destruct();
+            end
+            EspInterface._objectCache[player] = nil;
+        end
+    end
 
-	local plrs = players:GetPlayers();
-	for i = 2, #plrs do
-		createObject(plrs[i]);
-	end
+    local plrs = players:GetPlayers();
+    for i = 1, #plrs do
+        createObject(plrs[i]);
+    end
 
-	EspInterface.playerAdded = players.PlayerAdded:Connect(createObject);
-	EspInterface.playerRemoving = players.PlayerRemoving:Connect(removeObject);
-	EspInterface._hasLoaded = true;
+    EspInterface.playerAdded = players.PlayerAdded:Connect(createObject);
+    EspInterface.playerRemoving = players.PlayerRemoving:Connect(removeObject);
+    EspInterface._hasLoaded = true;
 end
 
 function EspInterface.Unload()
